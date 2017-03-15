@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+    	http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.2.xsd
+        http://www.springframework.org/schema/aop 
+        http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+        http://www.springframework.org/schema/tx 
+        http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
+	<!-- 申明式注入 -->
+	<context:component-scan base-package="com.itheima"></context:component-scan>
+	<!-- 注入式事务管理 -->
+	<tx:annotation-driven transaction-manager="txManager"/>
+	<!-- 事务管理器配置bean -->
+	<bean id="txManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+   		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	<!-- session工厂配置bean -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<!-- 数据源注入 -->
+		<property name="dataSource" ref="dataSource" /> <!-- 数据源 -->
+       	<!-- hbm文件映射配置 -->
+        <property name="mappingLocations">
+            <list>
+                <value>/com/itheima/**/domain/**.hbm.xml</value> <!-- Hibernate的实体bean的映射文件(可有多个) -->
+            </list>
+        </property>
+		<!-- hibernateProperties是用来配置Hibernate的属性信息 -->
+		<property name="hibernateProperties">
+			<value>
+				hibernate.dialect=org.hibernate.dialect.MySQLDialect
+				hibernate.hbm2ddl.auto=update
+				hibernate.show_sql=true
+				hibernate.format_sql=true
+			</value>
+		</property>
+	</bean>
+	
+	<!-- 数据源配置bean -->
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+
+		<property name="url" value="jdbc:mysql://localhost:3306/shop" />
+
+		<property name="username" value="root" />
+
+		<property name="password" value="admin" />
+
+	</bean>
+</beans>
