@@ -1,0 +1,17 @@
+#MyEclipse Hibernate Properties
+#Wed Mar 15 08:11:13 CST 2017
+genVersionTag=false
+sessionFactoryName=com.itheima.utils.HibernateSessionFactory
+genAnnotations=false
+configFile=/E_shop/src/hibernate.cfg.xml
+reStrategyClass=
+sessionFactoryId=
+profile=
+detectM2M=false
+genBasicCompId=false
+keyGenerator=
+createConfigFile=true
+basePersistenceClass=
+detectO2O=false
+useJavaTypes=true
+reSettingsFile=
